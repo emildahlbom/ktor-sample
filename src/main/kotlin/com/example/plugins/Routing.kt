@@ -11,9 +11,7 @@ fun Application.configureRouting() {
 
     routing {
         get("/") {
-            call.respondText("Hello World!", ContentType.Text.Plain)
-            call.respondText("Tjenare Världen!", ContentType.Text.Plain)
-            call.respondText("Hola el mundo!", ContentType.Text.Plain)
+            call.respondText("Tjenare världen!", ContentType.Text.Plain)
         }
     }
 }
