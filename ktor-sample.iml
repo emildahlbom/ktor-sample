@@ -92,5 +92,10 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlinx:kotlinx-coroutines-debug:1.4.3-native-mt" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: net.java.dev.jna:jna:5.5.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: net.java.dev.jna:jna-platform:5.5.0" level="project" />
+    <orderEntry type="library" name="Maven: io.ktor:ktor-html-builder-kotlinMultiplatform:1.5.1" level="project" />
+    <orderEntry type="library" name="Maven: io.ktor:ktor-server-core-kotlinMultiplatform:1.5.1" level="project" />
+    <orderEntry type="library" name="Maven: io.ktor:ktor-serialization:1.5.3" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.1.0" level="project" />
   </component>
 </module>

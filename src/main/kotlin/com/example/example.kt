@@ -1,38 +1,55 @@
+@file:Suppress("DEPRECATION")
+
 package com.example
 
-import io.ktor.application.*
-import io.ktor.http.*
-import io.ktor.response.*
-import io.ktor.routing.*
 import java.sql.*
-import java.util.Properties
-import io.ktor.routing.*
-import io.ktor.http.*
-import io.ktor.application.*
-import io.ktor.response.*
 
 object MySQLDatabaseExampleKotlin {
 
-    internal var conn: Connection? = null
-    internal var username = "system"
-    internal var password = "password"
+    private var conn: Connection? = null
+    // username = "system"
+    // password = "password"
 
     fun connection() {
-        Class.forName("oracle.jdbc.driver.OracleDriver").newInstance()
-        conn = DriverManager.getConnection(
-            "jdbc:oracle:thin:@localhost:1521:xe",
-            "system",
-            "password"
-        )
-        var stmt: Statement? = null
-        stmt = conn!!.createStatement()
+        try{
+            Class.forName("oracle.jdbc.driver.OracleDriver").newInstance()
+            conn = DriverManager.getConnection(
+                "jdbc:oracle:thin:@localhost:1521:xe",
+                "system",
+                "password"
+            )
+        }catch(ex: SQLException){
+            ex.printStackTrace()
+        }
+        put()
+    }
+
+    private fun put() {
+        val rs: ResultSet?
+        rs = putSQL("INSERT INTO j_transport\n" +
+                "  VALUES (\n" +
+                "    SYS_GUID(),\n" +
+                "    SYSTIMESTAMP,\n" +
+                "    SYSTIMESTAMP,\n" +
+                "    '{  \"User\"  : \"Alex\", \n" +
+                "        \"newValue\"  : {\n" +
+                "        \"jobValidityDuration\"   : \"P5D\",\n" +
+                "        \"sms\"   : {\"smOtaValidityDuration\": \"PT6H\"},\n" +
+                "        \"httpOta\"   : { \"smHttpTrigEnabled\" : false, \"smHttpTrigValidityDuration\" : \"PT6H\", \"smHttpTrigBlacklistedCardProfiles\" : [{\"type\" : \"Mobile\", \"number\" : \"415-555-1234\"}]}\n" +
+                "        },\n" +
+                "        \"changeComment\": \"Changed jobValidity Duration to P6D from P5D.\"\n" +
+                "    }')")
+    }
+
+    private fun putSQL(query: String): ResultSet{
+        val stmt: Statement?
         var rs: ResultSet? = null
-        rs = stmt!!.executeQuery("SELECT * FROM books")
-        if(stmt.execute("SELECT * FROM books")){
-            rs = stmt.resultSet
+        try{
+            stmt = conn!!.createStatement()
+            rs = stmt!!.executeQuery(query)
+        }catch(ex: SQLException){
+            ex.printStackTrace()
         }
-        while(rs!!.next()) {
-            println((rs.getString("title")))
-        }
+        return rs!!
     }
 }

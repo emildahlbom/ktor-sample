@@ -1,12 +1,19 @@
 package com.example
 
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
-import com.example.plugins.*
+import com.example.routes.registerCustomerRoutes
+import com.example.routes.registerOrderRoutes
+import io.ktor.application.Application
+import io.ktor.application.install
+import io.ktor.features.ContentNegotiation
+import io.ktor.serialization.json
 
-fun main() {
-    embeddedServer(Netty, port = 8080, host = "127.0.0.1") {
-        configureRouting()
-        MySQLDatabaseExampleKotlin.connection()
-    }.start(wait = true)
+
+fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
+
+fun Application.module(testing: Boolean = false) {
+    install(ContentNegotiation) {
+        json()
+    }
+    registerCustomerRoutes()
+    registerOrderRoutes()
 }
